@@ -5,6 +5,10 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvidentaStudenti", "EvidentaStudenti\EvidentaStudenti.csproj", "{A9E6B6AF-1120-47AC-8929-92BD4295BBA8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrarieModele", "LibrarieModele\LibrarieModele.csproj", "{15D133BE-C1CC-4BA3-9078-0FEB95C6DA89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NivelStocareDate", "NivelStocareDate\NivelStocareDate.csproj", "{424B5E5B-7832-4FA6-A65B-E3E212B80B15}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{A9E6B6AF-1120-47AC-8929-92BD4295BBA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9E6B6AF-1120-47AC-8929-92BD4295BBA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9E6B6AF-1120-47AC-8929-92BD4295BBA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15D133BE-C1CC-4BA3-9078-0FEB95C6DA89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15D133BE-C1CC-4BA3-9078-0FEB95C6DA89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15D133BE-C1CC-4BA3-9078-0FEB95C6DA89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15D133BE-C1CC-4BA3-9078-0FEB95C6DA89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{424B5E5B-7832-4FA6-A65B-E3E212B80B15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{424B5E5B-7832-4FA6-A65B-E3E212B80B15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{424B5E5B-7832-4FA6-A65B-E3E212B80B15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{424B5E5B-7832-4FA6-A65B-E3E212B80B15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
