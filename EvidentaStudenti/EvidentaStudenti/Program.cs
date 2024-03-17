@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using LibrarieModele;
 using NivelStocareDate;
 
@@ -8,7 +9,9 @@ namespace EvidentaStudenti
     {
         static void Main()
         {
-            AdministrareStudenti_Memorie adminStudenti = new AdministrareStudenti_Memorie();
+            //AdministrareStudenti_Memorie adminStudenti = new AdministrareStudenti_Memorie();
+            string numeFisier = ConfigurationManager.AppSettings["NumeFisier"];
+            AdministrareStudenti_FisierText adminStudenti = new AdministrareStudenti_FisierText(numeFisier);
             Student studentNou = new Student();
             int nrStudenti = 0;
 
@@ -18,7 +21,7 @@ namespace EvidentaStudenti
                 Console.WriteLine("C. Citire informatii student de la tastatura");
                 Console.WriteLine("I. Afisarea informatiilor despre ultimului student introdus");
                 Console.WriteLine("A. Afisare studenti din fisier");
-                Console.WriteLine("S. Salvare student in vector de obiecte");
+                Console.WriteLine("S. Salvare student in fisier");
                 Console.WriteLine("X. Inchidere program");
 
                 Console.WriteLine("Alegeti o optiune");
@@ -42,7 +45,7 @@ namespace EvidentaStudenti
                     case "S":
                         int idStudent = ++nrStudenti;
                         studentNou.IdStudent = idStudent;
-                        //adaugare student in vectorul de obiecte
+                        //adaugare student in fisier
                         adminStudenti.AddStudent(studentNou);
 
                         break;
