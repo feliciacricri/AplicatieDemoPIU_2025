@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.IO;
 using LibrarieModele;
 using NivelStocareDate;
 
@@ -11,9 +12,18 @@ namespace EvidentaStudenti
         {
             //AdministrareStudenti_Memorie adminStudenti = new AdministrareStudenti_Memorie();
             string numeFisier = ConfigurationManager.AppSettings["NumeFisier"];
-            AdministrareStudenti_FisierText adminStudenti = new AdministrareStudenti_FisierText(numeFisier);
+            string locatieFisierSolutie = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+            // setare locatie fisier in directorul corespunzator solutiei
+            // astfel incat datele din fisier sa poata fi utilizate si de alte proiecte
+            string caleCompletaFisier = locatieFisierSolutie + "\\" + numeFisier;
+
+            AdministrareStudenti_FisierText adminStudenti = new AdministrareStudenti_FisierText(caleCompletaFisier);
             Student studentNou = new Student();
             int nrStudenti = 0;
+
+            // acest apel ajuta la obtinerea numarului de studenti inca de la inceputul executiei
+            // astfel incat o eventuala adaugare sa atribuie un IdStudent corect noului student
+            adminStudenti.GetStudenti(out nrStudenti);
 
             string optiune;
             do
@@ -39,7 +49,7 @@ namespace EvidentaStudenti
                         break;
                     case "A":
                         Student[] studenti = adminStudenti.GetStudenti(out nrStudenti);
-                        AfisareStudenti(studenti, nrStudenti);
+                        AfisareStudenti(studenti);
 
                         break;
                     case "S":
@@ -70,25 +80,30 @@ namespace EvidentaStudenti
 
             Student student = new Student(0, nume, prenume);
 
+            Console.WriteLine("Introduceti notele");
+            string note = Console.ReadLine();
+            student.SetNote(note);
+
             return student;
         }
 
         public static void AfisareStudent(Student student)
         {
-            string infoStudent = string.Format("Studentul cu id-ul #{0} are numele: {1} {2}",
+            string infoStudent = string.Format("Studentul cu id-ul #{0} are numele: {1} {2} si notele: {3}",
                     student.IdStudent,
                     student.Nume ?? " NECUNOSCUT ",
-                    student.Prenume ?? " NECUNOSCUT ");
+                    student.Prenume ?? " NECUNOSCUT ",
+                    string.Join(",", student.GetNote()));
 
             Console.WriteLine(infoStudent);
         }
 
-        public static void AfisareStudenti(Student[] studenti, int nrStudenti)
+        public static void AfisareStudenti(Student[] studenti)
         {
             Console.WriteLine("Studentii sunt:");
-            for (int contor = 0; contor < nrStudenti; contor++)
+            foreach (Student student in studenti)
             {
-                string infoStudent = studenti[contor].Info();
+                string infoStudent = student.Info();
                 Console.WriteLine(infoStudent);
             }
         }

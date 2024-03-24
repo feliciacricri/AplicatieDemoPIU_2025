@@ -1,4 +1,5 @@
 ﻿using LibrarieModele;
+using System;
 using System.IO;
 
 namespace NivelStocareDate
@@ -45,6 +46,8 @@ namespace NivelStocareDate
                     studenti[nrStudenti++] = new Student(linieFisier);
                 }
             }
+
+            Array.Resize(ref studenti, nrStudenti);
 
             return studenti;
         }
