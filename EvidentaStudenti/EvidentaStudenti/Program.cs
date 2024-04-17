@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.IO;
 using LibrarieModele;
+using LibrarieModele.Enumerari;
 using NivelStocareDate;
 
 namespace EvidentaStudenti
@@ -84,16 +85,27 @@ namespace EvidentaStudenti
             string note = Console.ReadLine();
             student.SetNote(note);
 
+            Console.WriteLine("Alegeti un program de studiu: ");
+            Console.WriteLine("1 - Calculatoare \n" +
+            "2 - Automatica \n" +
+            "3 - Electronica \n" +
+            "4 - Electrotehnica \n" +
+            "5 - Energetica \n" +
+            "6 - InginerieEconomica \n");
+            int optiune = Convert.ToInt32(Console.ReadLine());
+            student.Specializare = (ProgramStudiu)optiune;
+
             return student;
         }
 
         public static void AfisareStudent(Student student)
         {
-            string infoStudent = string.Format("Studentul cu id-ul #{0} are numele: {1} {2} si notele: {3}",
+            string infoStudent = string.Format("Studentul cu id-ul #{0} are numele: {1} {2} si notele: {3}. Este inscris la programul de studiu: {4}",
                     student.IdStudent,
                     student.Nume ?? " NECUNOSCUT ",
                     student.Prenume ?? " NECUNOSCUT ",
-                    string.Join(",", student.GetNote()));
+                    string.Join(",", student.GetNote()),
+                    student.Specializare);
 
             Console.WriteLine(infoStudent);
         }

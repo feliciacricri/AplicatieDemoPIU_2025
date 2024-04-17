@@ -1,4 +1,5 @@
 ﻿
+using LibrarieModele.Enumerari;
 using System;
 
 namespace LibrarieModele
@@ -16,6 +17,7 @@ namespace LibrarieModele
         private const int NUME = 1;
         private const int PRENUME = 2;
         private const int NOTE = 3;
+        private const int SPECIALIZARE = 4;
 
         // data membra privata
         int[] note;
@@ -24,6 +26,8 @@ namespace LibrarieModele
         public int IdStudent { get; set; } //identificator unic student
         public string Nume { get; set; }
         public string Prenume { get; set; }
+
+        public ProgramStudiu Specializare { get; set; }
 
         public void SetNote(int[] _note)
         {
@@ -62,6 +66,7 @@ namespace LibrarieModele
             this.Nume = dateFisier[NUME];
             this.Prenume = dateFisier[PRENUME];
             SetNote(dateFisier[NOTE], SEPARATOR_SECUNDAR_FISIER);
+            this.Specializare = (ProgramStudiu)Enum.Parse(typeof(ProgramStudiu), dateFisier[SPECIALIZARE]);
         }
 
         public float Media
@@ -88,7 +93,7 @@ namespace LibrarieModele
                 sNote = string.Join(SEPARATOR_SECUNDAR_FISIER.ToString(), note);
             }
 
-            string info = $"Id:{IdStudent} Nume:{Nume ?? " NECUNOSCUT "} Prenume: {Prenume ?? " NECUNOSCUT "} Nore: {sNote}";
+            string info = $"Id:{IdStudent} Nume:{Nume ?? " NECUNOSCUT "} Prenume: {Prenume ?? " NECUNOSCUT "} Note: {sNote} Specializare: {Specializare}";
 
             return info;
         }
@@ -101,12 +106,13 @@ namespace LibrarieModele
                 sNote = string.Join(SEPARATOR_SECUNDAR_FISIER.ToString(), note);
             }
 
-            string obiectStudentPentruFisier = string.Format("{1}{0}{2}{0}{3}{0}{4}",
+            string obiectStudentPentruFisier = string.Format("{1}{0}{2}{0}{3}{0}{4}{0}{5}",
                 SEPARATOR_PRINCIPAL_FISIER,
                 IdStudent.ToString(),
                 (Nume ?? " NECUNOSCUT "),
                 (Prenume ?? " NECUNOSCUT "),
-                sNote);
+                sNote,
+                Specializare);
 
             return obiectStudentPentruFisier;
         }
