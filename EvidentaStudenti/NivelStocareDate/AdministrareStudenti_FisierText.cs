@@ -51,5 +51,45 @@ namespace NivelStocareDate
 
             return studenti;
         }
+
+        public Student GetStudent(string nume, string prenume)
+        {
+            // instructiunea 'using' va apela streamReader.Close()
+            using (StreamReader streamReader = new StreamReader(numeFisier))
+            {
+                string linieFisier;
+
+                // citeste cate o linie si creaza un obiect de tip Student
+                // pe baza datelor din linia citita
+                while ((linieFisier = streamReader.ReadLine()) != null)
+                {
+                    Student student = new Student(linieFisier);
+                    if (student.Nume.Equals(nume) && student.Prenume.Equals(prenume))
+                        return student;
+                }
+            }
+
+            return null;
+        }
+
+        public Student GetStudent(int idStudent)
+        {
+            // instructiunea 'using' va apela streamReader.Close()
+            using (StreamReader streamReader = new StreamReader(numeFisier))
+            {
+                string linieFisier;
+
+                // citeste cate o linie si creaza un obiect de tip Student
+                // pe baza datelor din linia citita
+                while ((linieFisier = streamReader.ReadLine()) != null)
+                {
+                    Student student = new Student(linieFisier);
+                    if (student.IdStudent == idStudent)
+                        return student;
+                }
+            }
+
+            return null;
+        }
     }
 }
