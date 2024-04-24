@@ -13,9 +13,9 @@ namespace EvidentaStudenti_UI_WindowsForms
     {
         AdministrareStudenti_FisierText adminStudenti;
 
-        private Label lblNume;
-        private Label lblPrenume;
-        private Label lblNote;
+        private Label lblAntetNume;
+        private Label lblAntetPrenume;
+        private Label lblAntetNote;
 
         private Label[] lblsNume;
         private Label[] lblsPrenume;
@@ -24,6 +24,7 @@ namespace EvidentaStudenti_UI_WindowsForms
         private const int LATIME_CONTROL = 100;
         private const int DIMENSIUNE_PAS_Y = 30;
         private const int DIMENSIUNE_PAS_X = 120;
+        private const int OFFSET_X = 400;
 
         public Form1()
         {
@@ -37,7 +38,7 @@ namespace EvidentaStudenti_UI_WindowsForms
             adminStudenti = new AdministrareStudenti_FisierText(caleCompletaFisier);
 
             //setare proprietati
-            this.Size = new Size(500, 200);
+            this.Size = new Size(800, 400);
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(100, 100);
             this.Font = new Font("Arial", 9, FontStyle.Bold);
@@ -45,28 +46,28 @@ namespace EvidentaStudenti_UI_WindowsForms
             this.Text = "Informatii studenti";
 
             //adaugare control de tip Label pentru 'Nume';
-            lblNume = new Label();
-            lblNume.Width = LATIME_CONTROL;
-            lblNume.Text = "Nume";
-            lblNume.Left = DIMENSIUNE_PAS_X;
-            lblNume.ForeColor = Color.DarkGreen;
-            this.Controls.Add(lblNume);
+            lblAntetNume = new Label();
+            lblAntetNume.Width = LATIME_CONTROL;
+            lblAntetNume.Text = "Nume";
+            lblAntetNume.Left = OFFSET_X + DIMENSIUNE_PAS_X;
+            lblAntetNume.ForeColor = Color.DarkGreen;
+            this.Controls.Add(lblAntetNume);
 
             //adaugare control de tip Label pentru 'Prenume';
-            lblPrenume = new Label();
-            lblPrenume.Width = LATIME_CONTROL;
-            lblPrenume.Text = "Prenume";
-            lblPrenume.Left = 2 * DIMENSIUNE_PAS_X;
-            lblPrenume.ForeColor = Color.DarkGreen;
-            this.Controls.Add(lblPrenume);
+            lblAntetPrenume = new Label();
+            lblAntetPrenume.Width = LATIME_CONTROL;
+            lblAntetPrenume.Text = "Prenume";
+            lblAntetPrenume.Left = OFFSET_X + 2 * DIMENSIUNE_PAS_X;
+            lblAntetPrenume.ForeColor = Color.DarkGreen;
+            this.Controls.Add(lblAntetPrenume);
 
             //adaugare control de tip Label pentru 'Note';
-            lblNote = new Label();
-            lblNote.Width = LATIME_CONTROL;
-            lblNote.Text = "Note";
-            lblNote.Left = 3 * DIMENSIUNE_PAS_X;
-            lblNote.ForeColor = Color.DarkGreen;
-            this.Controls.Add(lblNote);
+            lblAntetNote = new Label();
+            lblAntetNote.Width = LATIME_CONTROL;
+            lblAntetNote.Text = "Note";
+            lblAntetNote.Left = OFFSET_X + 3 * DIMENSIUNE_PAS_X;
+            lblAntetNote.ForeColor = Color.DarkGreen;
+            this.Controls.Add(lblAntetNote);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -90,7 +91,7 @@ namespace EvidentaStudenti_UI_WindowsForms
                 lblsNume[i] = new Label();
                 lblsNume[i].Width = LATIME_CONTROL;
                 lblsNume[i].Text = student.Nume;
-                lblsNume[i].Left = DIMENSIUNE_PAS_X;
+                lblsNume[i].Left = OFFSET_X + DIMENSIUNE_PAS_X;
                 lblsNume[i].Top = (i + 1) * DIMENSIUNE_PAS_Y;
                 this.Controls.Add(lblsNume[i]);
 
@@ -98,7 +99,7 @@ namespace EvidentaStudenti_UI_WindowsForms
                 lblsPrenume[i] = new Label();
                 lblsPrenume[i].Width = LATIME_CONTROL;
                 lblsPrenume[i].Text = student.Prenume;
-                lblsPrenume[i].Left = 2 * DIMENSIUNE_PAS_X;
+                lblsPrenume[i].Left = OFFSET_X + 2 * DIMENSIUNE_PAS_X;
                 lblsPrenume[i].Top = (i + 1) * DIMENSIUNE_PAS_Y;
                 this.Controls.Add(lblsPrenume[i]);
 
@@ -106,11 +107,56 @@ namespace EvidentaStudenti_UI_WindowsForms
                 lblsNote[i] = new Label();
                 lblsNote[i].Width = LATIME_CONTROL;
                 lblsNote[i].Text = string.Join(" ", student.GetNote());
-                lblsNote[i].Left = 3 * DIMENSIUNE_PAS_X;
+                lblsNote[i].Left = OFFSET_X + 3 * DIMENSIUNE_PAS_X;
                 lblsNote[i].Top = (i + 1) * DIMENSIUNE_PAS_Y;
                 this.Controls.Add(lblsNote[i]);
                 i++;
             }
+        }
+
+        private void btnAdauga_Click(object sender, EventArgs e)
+        {
+            lblNume.ForeColor = Color.LimeGreen;
+            lblPrenume.ForeColor = Color.LimeGreen;
+
+            if (!DateIntrareValide())
+            {
+                lblNume.ForeColor = Color.Red;
+                lblPrenume.ForeColor = Color.Red;
+
+                lblMesajEroare.Text = "Studentul exista deja";
+
+                return;
+            }
+
+            Student s = new Student(0, txtNume.Text, txtPrenume.Text);
+            s.SetNote(txtNote.Text);
+
+            adminStudenti.AddStudent(s);
+            lblMesajEroare.Text = "";
+
+            //resetarea controalelor pentru a introduce datele unui student nou
+            ResetareControale();
+        }
+
+        private bool DateIntrareValide()
+        {
+            string nume = txtNume.Text;
+            string prenume = txtPrenume.Text;
+
+            Student studentCuAcelasiNume = adminStudenti.GetStudent(nume, prenume);
+
+            return studentCuAcelasiNume == null;
+        }
+
+        private void btnAfiseaza_Click(object sender, EventArgs e)
+        {
+            AfiseazaStudenti();
+        }
+
+        private void ResetareControale()
+        {
+            txtNume.Text = txtPrenume.Text = txtNote.Text = string.Empty;
         }
     }
 }
