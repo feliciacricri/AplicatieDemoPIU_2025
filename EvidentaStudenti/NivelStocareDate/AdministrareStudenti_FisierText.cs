@@ -6,6 +6,8 @@ namespace NivelStocareDate
 {
     public class AdministrareStudenti_FisierText
     {
+        private const int ID_PRIMUL_STUDENT = 1;
+        private const int INCREMENT = 1;
         private const int NR_MAX_STUDENTI = 50;
         private string numeFisier;
 
@@ -20,6 +22,8 @@ namespace NivelStocareDate
 
         public void AddStudent(Student student)
         {
+            student.IdStudent = GetId();
+
             // instructiunea 'using' va apela la final streamWriterFisierText.Close();
             // al doilea parametru setat la 'true' al constructorului StreamWriter indica
             // modul 'append' de deschidere al fisierului
@@ -90,6 +94,26 @@ namespace NivelStocareDate
             }
 
             return null;
+        }
+
+        private int GetId()
+        {
+            int IdStudent = ID_PRIMUL_STUDENT;
+
+            // instructiunea 'using' va apela sr.Close()
+            using (StreamReader streamReader = new StreamReader(numeFisier))
+            {
+                string linieFisier;
+
+                //citeste cate o linie si creaza un obiect de tip Student pe baza datelor din linia citita
+                while ((linieFisier = streamReader.ReadLine()) != null)
+                {
+                    Student student = new Student(linieFisier);
+                    IdStudent = student.IdStudent + INCREMENT;
+                }
+            }
+
+            return IdStudent;
         }
     }
 }
