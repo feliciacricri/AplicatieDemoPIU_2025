@@ -1,6 +1,8 @@
 ﻿using LibrarieModele;
+using LibrarieModele.Enumerari;
 using NivelStocareDate;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
@@ -26,6 +28,8 @@ namespace EvidentaStudenti_UI_WindowsForms
         private const int DIMENSIUNE_PAS_X = 120;
         private const int OFFSET_X = 400;
 
+        ArrayList disciplineSelectate = new ArrayList();
+
         public Form1()
         {
             InitializeComponent();
@@ -38,7 +42,7 @@ namespace EvidentaStudenti_UI_WindowsForms
             adminStudenti = new AdministrareStudenti_FisierText(caleCompletaFisier);
 
             //setare proprietati
-            this.Size = new Size(800, 400);
+            this.Size = new Size(900, 400);
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(100, 100);
             this.Font = new Font("Arial", 9, FontStyle.Bold);
@@ -132,6 +136,15 @@ namespace EvidentaStudenti_UI_WindowsForms
             Student s = new Student(0, txtNume.Text, txtPrenume.Text);
             s.SetNote(txtNote.Text);
 
+            //set program studiu
+            //verificare radioButton selectat
+            ProgramStudiu specializareSelectata = GetProgramStudiuSelectat();
+            s.Specializare = specializareSelectata;
+
+            //set Discipline
+            s.Discipline = new ArrayList();
+            s.Discipline.AddRange(disciplineSelectate);
+
             adminStudenti.AddStudent(s);
             lblMesajEroare.Text = "";
 
@@ -149,14 +162,69 @@ namespace EvidentaStudenti_UI_WindowsForms
             return studentCuAcelasiNume == null;
         }
 
+        private void CkbDiscipline_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBoxControl = sender as CheckBox; //operator 'as'
+            //sau
+            //CheckBox checkBoxControl = (CheckBox)sender;  //operator cast
+
+            string disciplinaSelectata = checkBoxControl.Text;
+
+            //verificare daca checkbox-ul asupra caruia s-a actionat este selectat
+            if (checkBoxControl.Checked == true)
+                disciplineSelectate.Add(disciplinaSelectata);
+            else
+                disciplineSelectate.Remove(disciplinaSelectata);
+        }
+
+        private ProgramStudiu GetProgramStudiuSelectat()
+        {
+            if (rdbCalculatoare.Checked)
+                return ProgramStudiu.Calculatoare;
+            if (rdbAutomatica.Checked)
+                return ProgramStudiu.Automatica;
+            if (rdbElectronica.Checked)
+                return ProgramStudiu.Electronica;
+
+            return ProgramStudiu.Calculatoare;
+        }
+
         private void btnAfiseaza_Click(object sender, EventArgs e)
         {
+            List<Student> studenti = adminStudenti.GetStudenti();
             AfiseazaStudenti();
+            AfisareStudentiInControlListbox(studenti);
+        }
+
+        private void AfisareStudentiInControlListbox(List<Student> studenti)
+        {
+            lstAfisare.Items.Clear();
+            foreach (Student student in studenti)
+            {
+                //pentru a adauga un obiect de tip Student in colectia de Items a unui control de tip ListBox, 
+                // clasa Student trebuie sa implementeze metoda ToString() specificand cuvantul cheie 'override' in definitie
+                //pentru a arata ca metoda ToString a clasei de baza (Object) este suprascrisa
+                lstAfisare.Items.Add(student);
+
+                //personalizare sursa de date
+                //lstAfisare.Items.Add(s.NumeComplet);
+            }
         }
 
         private void ResetareControale()
         {
             txtNume.Text = txtPrenume.Text = txtNote.Text = string.Empty;
+
+            rdbCalculatoare.Checked = false;
+            rdbAutomatica.Checked = false;
+            rdbElectronica.Checked = false;
+
+            ckbPCLP.Checked = false;
+            ckbPOO.Checked = false;
+            ckbPIU.Checked = false;
+
+            disciplineSelectate.Clear();
+            lblMesajEroare.Text = string.Empty;
         }
     }
 }

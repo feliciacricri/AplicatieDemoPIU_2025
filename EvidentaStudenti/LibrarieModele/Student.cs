@@ -1,6 +1,7 @@
 ﻿
 using LibrarieModele.Enumerari;
 using System;
+using System.Collections;
 
 namespace LibrarieModele
 {
@@ -16,8 +17,10 @@ namespace LibrarieModele
         private const int ID = 0;
         private const int NUME = 1;
         private const int PRENUME = 2;
-        private const int NOTE = 3;
-        private const int SPECIALIZARE = 4;
+        private const int SPECIALIZARE = 3;
+        private const int DISCIPLINE = 4;
+        private const int NOTE = 5;
+
 
         // data membra privata
         int[] note;
@@ -28,6 +31,16 @@ namespace LibrarieModele
         public string Prenume { get; set; }
 
         public ProgramStudiu Specializare { get; set; }
+
+        public ArrayList Discipline { get; set; }
+
+        public string DisciplineAsString
+        {
+            get
+            {
+                return string.Join(SEPARATOR_SECUNDAR_FISIER.ToString(), Discipline.ToArray());
+            }
+        }
 
         public void SetNote(int[] _note)
         {
@@ -67,6 +80,10 @@ namespace LibrarieModele
             this.Prenume = dateFisier[PRENUME];
             SetNote(dateFisier[NOTE], SEPARATOR_SECUNDAR_FISIER);
             this.Specializare = (ProgramStudiu)Enum.Parse(typeof(ProgramStudiu), dateFisier[SPECIALIZARE]);
+
+            Discipline = new ArrayList();
+            //adauga mai multe elemente in lista de discipline
+            Discipline.AddRange(dateFisier[DISCIPLINE].Split(SEPARATOR_SECUNDAR_FISIER));
         }
 
         public float Media
@@ -93,7 +110,7 @@ namespace LibrarieModele
                 sNote = string.Join(SEPARATOR_SECUNDAR_FISIER.ToString(), note);
             }
 
-            string info = $"Id:{IdStudent} Nume:{Nume ?? " NECUNOSCUT "} Prenume: {Prenume ?? " NECUNOSCUT "} Note: {sNote} Specializare: {Specializare}";
+            string info = $"Id:{IdStudent} Nume:{Nume ?? " NECUNOSCUT "} Prenume: {Prenume ?? " NECUNOSCUT "} Specializare: {Specializare} Discipline: {DisciplineAsString} Note: {sNote} ";
 
             return info;
         }
@@ -106,13 +123,14 @@ namespace LibrarieModele
                 sNote = string.Join(SEPARATOR_SECUNDAR_FISIER.ToString(), note);
             }
 
-            string obiectStudentPentruFisier = string.Format("{1}{0}{2}{0}{3}{0}{4}{0}{5}",
+            string obiectStudentPentruFisier = string.Format("{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}",
                 SEPARATOR_PRINCIPAL_FISIER,
                 IdStudent.ToString(),
                 (Nume ?? " NECUNOSCUT "),
                 (Prenume ?? " NECUNOSCUT "),
-                sNote,
-                Specializare);
+                Specializare,
+                DisciplineAsString,
+                sNote);
 
             return obiectStudentPentruFisier;
         }
@@ -143,6 +161,11 @@ namespace LibrarieModele
             }
 
             return false;
+        }
+
+        public override string ToString()
+        {
+            return Info();
         }
     }
 }
