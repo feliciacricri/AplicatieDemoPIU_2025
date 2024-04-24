@@ -1,5 +1,5 @@
 ﻿using LibrarieModele;
-using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace NivelStocareDate
@@ -8,7 +8,6 @@ namespace NivelStocareDate
     {
         private const int ID_PRIMUL_STUDENT = 1;
         private const int INCREMENT = 1;
-        private const int NR_MAX_STUDENTI = 50;
         private string numeFisier;
 
         public AdministrareStudenti_FisierText(string numeFisier)
@@ -33,25 +32,22 @@ namespace NivelStocareDate
             }
         }
 
-        public Student[] GetStudenti(out int nrStudenti)
+        public List<Student> GetStudenti()
         {
-            Student[] studenti = new Student[NR_MAX_STUDENTI];
+            List<Student> studenti = new List<Student>();
 
             // instructiunea 'using' va apela streamReader.Close()
             using (StreamReader streamReader = new StreamReader(numeFisier))
             {
                 string linieFisier;
-                nrStudenti = 0;
 
                 // citeste cate o linie si creaza un obiect de tip Student
                 // pe baza datelor din linia citita
                 while ((linieFisier = streamReader.ReadLine()) != null)
                 {
-                    studenti[nrStudenti++] = new Student(linieFisier);
+                    studenti.Add(new Student(linieFisier));
                 }
             }
-
-            Array.Resize(ref studenti, nrStudenti);
 
             return studenti;
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using LibrarieModele;
@@ -20,11 +21,10 @@ namespace EvidentaStudenti
 
             AdministrareStudenti_FisierText adminStudenti = new AdministrareStudenti_FisierText(caleCompletaFisier);
             Student studentNou = new Student();
-            int nrStudenti = 0;
 
             // acest apel ajuta la obtinerea numarului de studenti inca de la inceputul executiei
             // astfel incat o eventuala adaugare sa atribuie un IdStudent corect noului student
-            adminStudenti.GetStudenti(out nrStudenti);
+            List<Student> studenti = adminStudenti.GetStudenti();
 
             string optiune;
             do
@@ -49,12 +49,12 @@ namespace EvidentaStudenti
 
                         break;
                     case "A":
-                        Student[] studenti = adminStudenti.GetStudenti(out nrStudenti);
+                        studenti = adminStudenti.GetStudenti();
                         AfisareStudenti(studenti);
 
                         break;
                     case "S":
-                        int idStudent = ++nrStudenti;
+                        int idStudent = studenti.Count + 1;
                         studentNou.IdStudent = idStudent;
                         //adaugare student in fisier
                         adminStudenti.AddStudent(studentNou);
@@ -110,7 +110,7 @@ namespace EvidentaStudenti
             Console.WriteLine(infoStudent);
         }
 
-        public static void AfisareStudenti(Student[] studenti)
+        public static void AfisareStudenti(List<Student> studenti)
         {
             Console.WriteLine("Studentii sunt:");
             foreach (Student student in studenti)

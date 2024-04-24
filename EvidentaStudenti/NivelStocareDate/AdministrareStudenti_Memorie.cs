@@ -1,29 +1,24 @@
 ﻿using LibrarieModele;
+using System.Collections.Generic;
 
 namespace NivelStocareDate
 {
     public class AdministrareStudenti_Memorie
     {
-        private const int NR_MAX_STUDENTI = 50;
-
-        private Student[] studenti;
-        private int nrStudenti;
+        private List<Student> studenti;
 
         public AdministrareStudenti_Memorie()
         {
-            studenti = new Student[NR_MAX_STUDENTI];
-            nrStudenti = 0;
+            studenti = new List<Student>();
         }
 
         public void AddStudent(Student student)
         {
-            studenti[nrStudenti] = student;
-            nrStudenti++;
+            studenti.Add(student);
         }
 
-        public Student[] GetStudenti(out int nrStudenti)
+        public List<Student> GetStudenti()
         {
-            nrStudenti = this.nrStudenti;
             return studenti;
         }
     }

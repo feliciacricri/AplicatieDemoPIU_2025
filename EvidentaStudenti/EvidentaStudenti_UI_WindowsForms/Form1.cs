@@ -1,15 +1,10 @@
-﻿using System;
-using LibrarieModele;
+﻿using LibrarieModele;
 using NivelStocareDate;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Configuration;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EvidentaStudenti_UI_WindowsForms
@@ -40,9 +35,6 @@ namespace EvidentaStudenti_UI_WindowsForms
             string caleCompletaFisier = locatieFisierSolutie + "\\" + numeFisier;
 
             adminStudenti = new AdministrareStudenti_FisierText(caleCompletaFisier);
-            int nrStudenti = 0;
-
-            Student[] studenti = adminStudenti.GetStudenti(out nrStudenti);
 
             //setare proprietati
             this.Size = new Size(500, 200);
@@ -84,7 +76,8 @@ namespace EvidentaStudenti_UI_WindowsForms
 
         private void AfiseazaStudenti()
         {
-            Student[] studenti = adminStudenti.GetStudenti(out int nrStudenti);
+            List<Student> studenti = adminStudenti.GetStudenti();
+            int nrStudenti = studenti.Count;
 
             lblsNume = new Label[nrStudenti];
             lblsPrenume = new Label[nrStudenti];
