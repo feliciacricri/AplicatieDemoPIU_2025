@@ -1,10 +1,11 @@
 ﻿using LibrarieModele;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
 namespace NivelStocareDate
 {
-    public class AdministrareStudenti_FisierText
+    public class AdministrareStudenti_FisierText : IStocareData
     {
         private const int ID_PRIMUL_STUDENT = 1;
         private const int INCREMENT = 1;
@@ -90,6 +91,12 @@ namespace NivelStocareDate
             }
 
             return null;
+        }
+
+
+        public bool UpdateStudent(Student s)
+        {
+            throw new Exception("Optiunea UpdateStudent nu este implementata");
         }
 
         private int GetId()

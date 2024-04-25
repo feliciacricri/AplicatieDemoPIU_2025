@@ -13,7 +13,7 @@ namespace EvidentaStudenti_UI_WindowsForms
 {
     public partial class Form1 : Form
     {
-        AdministrareStudenti_FisierText adminStudenti;
+        IStocareData adminStudenti;
 
         private Label lblAntetNume;
         private Label lblAntetPrenume;
@@ -33,13 +33,7 @@ namespace EvidentaStudenti_UI_WindowsForms
         public Form1()
         {
             InitializeComponent();
-            string numeFisier = ConfigurationManager.AppSettings["NumeFisier"];
-            string locatieFisierSolutie = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-            // setare locatie fisier in directorul corespunzator solutiei
-            // astfel incat datele din fisier sa poata fi utilizate si de alte proiecte
-            string caleCompletaFisier = locatieFisierSolutie + "\\" + numeFisier;
-
-            adminStudenti = new AdministrareStudenti_FisierText(caleCompletaFisier);
+            adminStudenti = StocareFactory.GetAdministratorStocare();
 
             //setare proprietati
             this.Size = new Size(900, 400);

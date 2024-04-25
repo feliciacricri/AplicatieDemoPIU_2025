@@ -5,6 +5,7 @@ using System.Collections;
 
 namespace LibrarieModele
 {
+    [Serializable]
     public class Student
     {
         //constante
