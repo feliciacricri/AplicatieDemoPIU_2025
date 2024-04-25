@@ -194,6 +194,7 @@ namespace EvidentaStudenti_UI_WindowsForms
             List<Student> studenti = adminStudenti.GetStudenti();
             AfiseazaStudenti();
             AfisareStudentiInControlListbox(studenti);
+            AfisareStudentiInControlDataGridView(studenti);
         }
 
         private void AfisareStudentiInControlListbox(List<Student> studenti)
@@ -209,6 +210,20 @@ namespace EvidentaStudenti_UI_WindowsForms
                 //personalizare sursa de date
                 //lstAfisare.Items.Add(s.NumeComplet);
             }
+        }
+
+        private void AfisareStudentiInControlDataGridView(List<Student> studenti)
+        {
+            //reset continut control DataGridView
+            dataGridStudenti.DataSource = null;
+
+            //!!!! Controlul de tip DataGridView are ca sursa de date lista de obiecte de tip Student !!!
+            dataGridStudenti.DataSource = studenti;
+
+            // personalizare sursa de date
+            // dataGridStudenti.DataSource = studenti.Select(s => new { s.Id, s.Nume, s.Prenume, 
+            // s.Specializare, Discipline = string.Join(",", s.Discipline), 
+            // Note = string.Join(",", s.GetNote()) } ).ToList();
         }
 
         private void ResetareControale()

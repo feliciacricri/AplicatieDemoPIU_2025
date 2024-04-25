@@ -48,8 +48,10 @@
             this.rdbAutomatica = new System.Windows.Forms.RadioButton();
             this.lblSpecializare = new System.Windows.Forms.Label();
             this.lstAfisare = new System.Windows.Forms.ListBox();
+            this.dataGridStudenti = new System.Windows.Forms.DataGridView();
             this.gpbDiscipline.SuspendLayout();
             this.gpbProgrameStudiu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridStudenti)).BeginInit();
             this.SuspendLayout();
             // 
             // lblNume
@@ -251,16 +253,26 @@
             // 
             this.lstAfisare.FormattingEnabled = true;
             this.lstAfisare.ItemHeight = 16;
-            this.lstAfisare.Location = new System.Drawing.Point(598, 270);
+            this.lstAfisare.Location = new System.Drawing.Point(582, 240);
             this.lstAfisare.Name = "lstAfisare";
             this.lstAfisare.Size = new System.Drawing.Size(527, 100);
             this.lstAfisare.TabIndex = 42;
+            // 
+            // dataGridStudenti
+            // 
+            this.dataGridStudenti.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridStudenti.Location = new System.Drawing.Point(582, 359);
+            this.dataGridStudenti.Name = "dataGridStudenti";
+            this.dataGridStudenti.RowHeadersWidth = 51;
+            this.dataGridStudenti.RowTemplate.Height = 24;
+            this.dataGridStudenti.Size = new System.Drawing.Size(527, 150);
+            this.dataGridStudenti.TabIndex = 43;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1082, 555);
             this.Controls.Add(this.lblMesajEroare);
             this.Controls.Add(this.btnAfiseaza);
             this.Controls.Add(this.btnAdauga);
@@ -275,6 +287,7 @@
             this.Controls.Add(this.gpbProgrameStudiu);
             this.Controls.Add(this.lblSpecializare);
             this.Controls.Add(this.lstAfisare);
+            this.Controls.Add(this.dataGridStudenti);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -282,6 +295,7 @@
             this.gpbDiscipline.PerformLayout();
             this.gpbProgrameStudiu.ResumeLayout(false);
             this.gpbProgrameStudiu.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridStudenti)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -309,6 +323,7 @@
         private System.Windows.Forms.RadioButton rdbAutomatica;
         private System.Windows.Forms.Label lblSpecializare;
         private System.Windows.Forms.ListBox lstAfisare;
+        private System.Windows.Forms.DataGridView dataGridStudenti;
     }
 }
 
