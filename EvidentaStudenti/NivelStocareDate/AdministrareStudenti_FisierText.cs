@@ -93,10 +93,29 @@ namespace NivelStocareDate
             return null;
         }
 
-
-        public bool UpdateStudent(Student s)
+        public bool UpdateStudent(Student studentActualizat)
         {
-            throw new Exception("Optiunea UpdateStudent nu este implementata");
+            List<Student> studenti = GetStudenti();
+            bool actualizareCuSucces = false;
+
+            //instructiunea 'using' va apela la final swFisierText.Close();
+            //al doilea parametru setat la 'false' al constructorului StreamWriter indica modul 'overwrite' de deschidere al fisierului
+            using (StreamWriter streamWriterFisierText = new StreamWriter(numeFisier, false))
+            {
+                foreach (Student student in studenti)
+                {
+                    Student studentPentruScrisInFisier = student;
+                    //informatiile despre studentul actualizat vor fi preluate din parametrul "studentActualizat"
+                    if (student.IdStudent == studentActualizat.IdStudent)
+                    {
+                        studentPentruScrisInFisier = studentActualizat;
+                    }
+                    streamWriterFisierText.WriteLine(studentPentruScrisInFisier.ConversieLaSir_PentruFisier());
+                }
+                actualizareCuSucces = true;
+            }
+
+            return actualizareCuSucces;
         }
 
         private int GetId()
